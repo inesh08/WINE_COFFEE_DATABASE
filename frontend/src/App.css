@@ -5,23 +5,46 @@
 }
 
 html {
-  background: linear-gradient(135deg, #a67c52 0%, #9d6b4f 50%, #8a4d2e 100%);
+  /* Dramatic sepia-brown cloudy sky background */
+  background: 
+    radial-gradient(ellipse 120% 80% at 50% 20%, rgba(184, 150, 120, 0.25), transparent 60%),
+    radial-gradient(ellipse 100% 70% at 30% 40%, rgba(139, 100, 80, 0.2), transparent 50%),
+    radial-gradient(ellipse 80% 60% at 70% 60%, rgba(90, 65, 50, 0.3), transparent 55%),
+    linear-gradient(180deg, 
+      rgba(139, 100, 80, 0.4) 0%,
+      rgba(100, 70, 55, 0.5) 25%,
+      rgba(70, 50, 40, 0.6) 50%,
+      rgba(45, 35, 30, 0.7) 75%,
+      rgba(30, 25, 20, 0.85) 100%
+    );
   min-height: 100vh;
+  background-attachment: fixed;
 }
 
 body {
   font-family: 'Georgia', 'Times New Roman', serif;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #a67c52 0%, #9d6b4f 50%, #8a4d2e 100%) !important;
+  background: transparent !important;
   margin: 0;
   padding: 0;
 }
 
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #a67c52 0%, #9d6b4f 50%, #8a4d2e 100%);
+  background: 
+    radial-gradient(ellipse 120% 80% at 50% 20%, rgba(184, 150, 120, 0.25), transparent 60%),
+    radial-gradient(ellipse 100% 70% at 30% 40%, rgba(139, 100, 80, 0.2), transparent 50%),
+    radial-gradient(ellipse 80% 60% at 70% 60%, rgba(90, 65, 50, 0.3), transparent 55%),
+    linear-gradient(180deg, 
+      rgba(139, 100, 80, 0.4) 0%,
+      rgba(100, 70, 55, 0.5) 25%,
+      rgba(70, 50, 40, 0.6) 50%,
+      rgba(45, 35, 30, 0.7) 75%,
+      rgba(30, 25, 20, 0.85) 100%
+    );
   position: relative;
   padding: 2rem;
+  background-attachment: fixed;
 }
 
 /* Earthy Color Palette */
@@ -33,14 +56,14 @@ body {
   --warm-cream: #f0ead6;
   --mushroom-taupe: #a67c52;
   --ink-blue: #3d5568;
-  --ochre: #b88d4c;
+  --ochre: #d4a853;
   --deep-blue: #2d3d4a;
   
   --primary-bg: #2d4a2d;
   --secondary-bg: #3a2c3d;
-  --accent-color: #b88d4c;
+  --accent-color: #d4a853;
   --text-light: #f0ead6;
-  --text-gold: #d4af37;
+  --text-gold: #e8c85a;
 }
 
 /* Earthy Accents */

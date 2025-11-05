@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import './App.css';
-import { wineAPI, coffeeAPI, demoAPI } from './services/api';
+import { wineAPI, coffeeAPI, demoAPI, reviewAPI } from './services/api';
 
 // Simple pages using inline styles
 const Home = () => {
@@ -131,6 +131,13 @@ const WineSearch = () => {
       }
     }
     
+    // Sort alphabetically by name
+    filtered.sort((a, b) => {
+      const nameA = (a.name || '').toLowerCase();
+      const nameB = (b.name || '').toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+    
     setFilteredWines(filtered);
   }, [allWines, filters]);
 
@@ -195,7 +202,14 @@ const WineSearch = () => {
     setFilters({...filters, [filterKey]: value});
   };
 
-  const getUniqueValues = (key) => [...new Set(allWines.map(w => w[key]).filter(Boolean))];
+  const getUniqueValues = (key) => {
+    const values = [...new Set(allWines.map(w => w[key]).filter(Boolean))];
+    return values.sort((a, b) => {
+      const valA = String(a).toLowerCase();
+      const valB = String(b).toLowerCase();
+      return valA.localeCompare(valB);
+    });
+  };
 
   return (
     <div style={{
@@ -509,6 +523,13 @@ const CoffeeSearch = () => {
       filtered = filtered.filter(coffee => coffee.acidity_level === filters.acidityLevel);
     }
     
+    // Sort alphabetically by name
+    filtered.sort((a, b) => {
+      const nameA = (a.name || '').toLowerCase();
+      const nameB = (b.name || '').toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+    
     setFilteredCoffees(filtered);
   }, [allCoffees, filters]);
 
@@ -572,7 +593,14 @@ const CoffeeSearch = () => {
     setFilters({...filters, [filterKey]: value});
   };
 
-  const getUniqueValues = (key) => [...new Set(allCoffees.map(c => c[key]).filter(Boolean))];
+  const getUniqueValues = (key) => {
+    const values = [...new Set(allCoffees.map(c => c[key]).filter(Boolean))];
+    return values.sort((a, b) => {
+      const valA = String(a).toLowerCase();
+      const valB = String(b).toLowerCase();
+      return valA.localeCompare(valB);
+    });
+  };
 
   return (
     <div style={{
@@ -856,6 +884,29 @@ const ProductDetail = () => {
 
   if (!product) return <div style={{padding: '2rem', textAlign: 'center'}}>Loading...</div>;
 
+  // Build a brief, friendly history/context snippet (2–3 lines)
+  const buildHistorySnippet = () => {
+    const country = product.country || 'its country of origin';
+    if (type === 'wine') {
+      const region = product.region || 'renowned regions';
+      const vintage = product.vintage ? ` Since ${product.vintage},` : ' Historically,';
+      const grapeNote = product.type ? `${product.type.charAt(0).toUpperCase() + product.type.slice(1)} styles` : 'classic styles';
+      return (
+        `${vintage} ${grapeNote} from ${region} have reflected the terroir of ${country}. ` +
+        `This bottle follows that tradition with careful cellar craft and a focus on balance.`
+      );
+    }
+    // coffee
+    const origin = product.origin || 'heritage origins';
+    const roast = product.roast_level ? `${product.roast_level.replace('-', ' ')}` : 'artisan';
+    return (
+      `From ${origin}, ${country}, this ${roast} roast traces its roots to smallholder farms ` +
+      `where careful processing shaped the region’s signature cup profile.`
+    );
+  };
+
+  const historySnippet = buildHistorySnippet();
+
   const addToCart = () => {
     if (quantity > stock) {
       alert(`Only ${stock} ${type === 'wine' ? 'bottles' : 'packages'} available!`);
@@ -890,6 +941,11 @@ const ProductDetail = () => {
     <div style={{padding: '2rem', maxWidth: '900px', margin: '0 auto'}}>
       <h1 className="gold-accent" style={{fontSize: '2.5rem', marginBottom: '1rem'}}>{product.name}</h1>
       
+      {/* Short history/context snippet */}
+      <div className="luxury-card" style={{padding: '1rem 1.25rem', marginBottom: '1rem', background: 'rgba(0,0,0,0.35)'}}>
+        <p style={{color: '#f0ead6', margin: 0, lineHeight: 1.6}}>{historySnippet}</p>
+      </div>
+
       {/* Stock Information Banner */}
       <div className="luxury-card" style={{
         padding: '1.5rem', 
@@ -1124,35 +1180,24 @@ const Checkout = () => {
       return itemType === 'coffee';
     }).length;
     
-    // Clear the cart
+    // Store last order items for rating flow, then clear the cart
+    const lastOrderItems = cart.map(item => ({
+      id: item.id,
+      name: item.name,
+      category: item.category || (item.region ? 'wine' : 'coffee'),
+      quantity: item.quantity || 1
+    }));
+    localStorage.setItem('lastOrderItems', JSON.stringify(lastOrderItems));
     localStorage.removeItem('cart');
     setCart([]);
     
     // Show success message with recommendations
     let message = `✅ Order Complete!\n\nThank you for your purchase of ${itemCount} ${itemCount === 1 ? 'item' : 'items'} worth ₹${total.toLocaleString('en-IN')}!\n\n`;
     
-    // Redirect based on what was ordered
-    if (hasWine && !hasCoffee) {
-      // Only wine ordered - suggest coffee
-      message += '🍷 You ordered wine! Why not explore our premium coffee collection? ☕\n\nClick OK to browse coffees!';
-      alert(message);
-      navigate('/coffees');
-    } else if (hasCoffee && !hasWine) {
-      // Only coffee ordered - suggest wine
-      message += '☕ You ordered coffee! Discover our exquisite wine collection! 🍷\n\nClick OK to browse wines!';
-      alert(message);
-      navigate('/wines');
-    } else if (hasWine && hasCoffee) {
-      // Both wine and coffee ordered - go to choose page
-      message += '🍷☕ You ordered both wine and coffee! Continue exploring our collection!\n\nClick OK to continue shopping!';
-      alert(message);
-      navigate('/choose');
-    } else {
-      // Default - go to choose page
-      message += 'Continue shopping!';
-      alert(message);
-      navigate('/choose');
-    }
+    // Thank-you then go to rating page
+    message += '⭐ Please rate the items you purchased to help others!';
+    alert(message);
+    navigate('/rate');
   };
 
   return (

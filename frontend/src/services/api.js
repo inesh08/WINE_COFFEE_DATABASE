@@ -88,6 +88,18 @@ export const coffeeAPI = {
   },
 };
 
+// Review API
+export const reviewAPI = {
+  create: (reviewData) => apiCall(API_ENDPOINTS.REVIEWS, {
+    method: 'POST',
+    body: JSON.stringify(reviewData),
+  }),
+  getWineReviews: (wineId) => apiCall(API_ENDPOINTS.WINE_REVIEWS(wineId)),
+  getCoffeeReviews: (coffeeId) => apiCall(API_ENDPOINTS.COFFEE_REVIEWS(coffeeId)),
+  getWineRating: (wineId) => apiCall(`${API_ENDPOINTS.WINE_REVIEWS(wineId)}/rating`),
+  getCoffeeRating: (coffeeId) => apiCall(`${API_ENDPOINTS.COFFEE_REVIEWS(coffeeId)}/rating`),
+};
+
 // Demo/Query API
 export const demoAPI = {
   query: (type) => apiCall(API_ENDPOINTS.QUERY(type)),
