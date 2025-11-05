@@ -1,0 +1,57 @@
+.product-selection-page {
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-family: 'Georgia', serif;
+  margin-bottom: 3rem;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+.product-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 3rem;
+}
+
+.product-option {
+  text-align: center;
+  padding: 4rem 2rem;
+  cursor: pointer;
+}
+
+.product-icon {
+  font-size: 6rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+}
+
+.product-option h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.product-option p {
+  color: var(--luxury-light-gold);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .product-options {
+    grid-template-columns: 1fr;
+  }
+}
+
