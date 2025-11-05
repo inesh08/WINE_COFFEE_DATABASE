@@ -143,6 +143,75 @@ def run_query(query_type):
             cursor.execute("SELECT * FROM customers LIMIT 10")
         elif query_type == 'reviews':
             cursor.execute("SELECT * FROM reviews LIMIT 10")
+        # Nested Query: Find wines that have reviews with rating > 4
+        elif query_type == 'nested-wines-high-rated':
+            cursor.execute("""
+                SELECT * FROM wines 
+                WHERE id IN (
+                    SELECT wine_id FROM reviews 
+                    WHERE rating > 4 AND wine_id IS NOT NULL
+                )
+            """)
+        # Join Query: Get wines with their review counts and average ratings
+        elif query_type == 'join-wines-reviews':
+            cursor.execute("""
+                SELECT w.*, 
+                       COUNT(r.id) as review_count,
+                       AVG(r.rating) as avg_rating
+                FROM wines w
+                LEFT JOIN reviews r ON w.id = r.wine_id
+                GROUP BY w.id
+                ORDER BY avg_rating DESC, review_count DESC
+                LIMIT 20
+            """)
+        # Aggregate Query: Get statistics by wine type
+        elif query_type == 'aggregate-wine-stats':
+            cursor.execute("""
+                SELECT 
+                    type,
+                    COUNT(*) as total_wines,
+                    AVG(price) as avg_price,
+                    MIN(price) as min_price,
+                    MAX(price) as max_price,
+                    AVG(alcohol_content) as avg_alcohol
+                FROM wines
+                GROUP BY type
+                ORDER BY total_wines DESC
+            """)
+        # Nested Query: Find coffees that have reviews with rating > 4
+        elif query_type == 'nested-coffees-high-rated':
+            cursor.execute("""
+                SELECT * FROM coffees 
+                WHERE id IN (
+                    SELECT coffee_id FROM reviews 
+                    WHERE rating > 4 AND coffee_id IS NOT NULL
+                )
+            """)
+        # Join Query: Get coffees with their review counts and average ratings
+        elif query_type == 'join-coffees-reviews':
+            cursor.execute("""
+                SELECT c.*, 
+                       COUNT(r.id) as review_count,
+                       AVG(r.rating) as avg_rating
+                FROM coffees c
+                LEFT JOIN reviews r ON c.id = r.coffee_id
+                GROUP BY c.id
+                ORDER BY avg_rating DESC, review_count DESC
+                LIMIT 20
+            """)
+        # Aggregate Query: Get statistics by coffee type
+        elif query_type == 'aggregate-coffee-stats':
+            cursor.execute("""
+                SELECT 
+                    type,
+                    COUNT(*) as total_coffees,
+                    AVG(price) as avg_price,
+                    MIN(price) as min_price,
+                    MAX(price) as max_price
+                FROM coffees
+                GROUP BY type
+                ORDER BY total_coffees DESC
+            """)
         else:
             return jsonify({'error': 'Invalid query'}), 400
         

@@ -1,0 +1,249 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: linear-gradient(135deg, #a67c52 0%, #9d6b4f 50%, #8a4d2e 100%);
+  min-height: 100vh;
+}
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #a67c52 0%, #9d6b4f 50%, #8a4d2e 100%) !important;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #a67c52 0%, #9d6b4f 50%, #8a4d2e 100%);
+  position: relative;
+  padding: 2rem;
+}
+
+/* Earthy Color Palette */
+:root {
+  --forest-green: #2d4a2d;
+  --plum: #4a2c3d;
+  --sage-green: #8f9a6b;
+  --rust: #9d6b4f;
+  --warm-cream: #f0ead6;
+  --mushroom-taupe: #a67c52;
+  --ink-blue: #3d5568;
+  --ochre: #b88d4c;
+  --deep-blue: #2d3d4a;
+  
+  --primary-bg: #2d4a2d;
+  --secondary-bg: #3a2c3d;
+  --accent-color: #b88d4c;
+  --text-light: #f0ead6;
+  --text-gold: #d4af37;
+}
+
+/* Earthy Accents */
+.gold-accent {
+  color: var(--ochre);
+  text-shadow: 0 0 10px rgba(184, 141, 76, 0.5);
+}
+
+/* Cart Indicator */
+.cart-indicator {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, var(--ochre), var(--rust));
+  color: var(--warm-cream);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(184, 141, 76, 0.6);
+  transition: all 0.3s;
+}
+
+.cart-indicator:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(184, 141, 76, 0.8);
+}
+
+/* Button Styles */
+.luxury-button {
+  background: linear-gradient(135deg, var(--ochre), var(--rust));
+  color: var(--warm-cream);
+  padding: 1.2rem 3rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 15px rgba(184, 141, 76, 0.4);
+  transition: all 0.3s;
+  font-family: 'Georgia', serif;
+}
+
+.luxury-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(184, 141, 76, 0.6);
+}
+
+.luxury-button-secondary {
+  background: transparent;
+  color: var(--ochre);
+  border: 2px solid var(--sage-green);
+  padding: 1rem 2.5rem;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.luxury-button-secondary:hover {
+  background: rgba(143, 154, 107, 0.1);
+  box-shadow: 0 0 20px rgba(143, 154, 107, 0.3);
+}
+
+/* Card Styles */
+.luxury-card {
+  background: linear-gradient(135deg, rgba(61, 85, 104, 0.95), rgba(58, 44, 61, 0.95));
+  border: 2px solid var(--sage-green);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(143, 154, 107, 0.3);
+  transition: all 0.3s;
+}
+
+.luxury-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(143, 154, 107, 0.4),
+              0 0 0 2px rgba(184, 141, 76, 0.5);
+}
+
+/* Input Styles */
+.luxury-input {
+  background: rgba(61, 85, 104, 0.6);
+  border: 2px solid var(--sage-green);
+  color: var(--warm-cream);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  width: 100%;
+  transition: all 0.3s;
+  font-family: 'Georgia', serif;
+}
+
+.luxury-input:focus {
+  outline: none;
+  border-color: var(--ochre);
+  box-shadow: 0 0 20px rgba(184, 141, 76, 0.4);
+}
+
+.luxury-input::placeholder {
+  color: rgba(143, 154, 107, 0.5);
+}
+
+/* Product Card */
+.product-card {
+  background: linear-gradient(135deg, rgba(61, 85, 104, 0.95), rgba(58, 44, 61, 0.95));
+  border: 2px solid var(--sage-green);
+  border-radius: 15px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(184, 141, 76, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.product-card:hover::before {
+  left: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(184, 141, 76, 0.5);
+  border-color: var(--ochre);
+}
+
+/* Decorative Lines */
+.decorative-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ochre), transparent);
+  margin: 2rem 0;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(61, 85, 104, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--ochre), var(--rust));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ochre);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
+  }
+  
+  .cart-indicator {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
