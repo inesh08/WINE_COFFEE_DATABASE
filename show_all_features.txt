@@ -1,0 +1,154 @@
+==========================================================
+   DBMS MINI PROJECT - ALL TRIGGERS, PROCEDURES & FUNCTIONS
+==========================================================
+
+🎯 TOTAL FEATURES: 29
+   - Triggers: 11
+   - Procedures: 13
+   - Functions: 5
+
+==========================================================
+📋 TRIGGERS (11 total)
+==========================================================
+
+1. wines_update_timestamp
+   - Type: BEFORE UPDATE
+   - Table: wines
+   - Purpose: Preserves created_at timestamp
+
+2. coffees_update_timestamp
+   - Type: BEFORE UPDATE
+   - Table: coffees
+   - Purpose: Preserves created_at timestamp
+
+3. calculate_order_total_wines
+   - Type: AFTER INSERT
+   - Table: order_wines
+   - Purpose: Auto-calculates order total when wines added
+
+4. calculate_order_total_wines_update
+   - Type: AFTER UPDATE
+   - Table: order_wines
+   - Purpose: Recalculates order total when wines updated
+
+5. calculate_order_total_wines_delete
+   - Type: AFTER DELETE
+   - Table: order_wines
+   - Purpose: Recalculates order total when wines deleted
+
+6. calculate_order_total_coffees
+   - Type: AFTER INSERT
+   - Table: order_coffees
+   - Purpose: Auto-calculates order total when coffees added
+
+7. calculate_order_total_coffees_update
+   - Type: AFTER UPDATE
+   - Table: order_coffees
+   - Purpose: Recalculates order total when coffees updated
+
+8. calculate_order_total_coffees_delete
+   - Type: AFTER DELETE
+   - Table: order_coffees
+   - Purpose: Recalculates order total when coffees deleted
+
+9. validate_wine_rating
+   - Type: BEFORE INSERT
+   - Table: reviews
+   - Purpose: Validates wine rating between 1-5
+
+10. validate_coffee_rating
+   - Type: BEFORE INSERT
+   - Table: reviews
+   - Purpose: Validates coffee rating between 1-5
+
+11. validate_pairing_score
+   - Type: BEFORE INSERT
+   - Table: pairings
+   - Purpose: Validates pairing score between 0-10
+
+==========================================================
+⚙️ STORED PROCEDURES (13 total)
+==========================================================
+
+1. GetWinesByType
+   - Input: wine_type (VARCHAR)
+   - Purpose: Get wines by type
+
+2. GetCoffeesByRoastLevel
+   - Input: roast_level (VARCHAR)
+   - Purpose: Get coffees by roast level
+
+3. GetTopRatedWines
+   - Input: top_count (INT)
+   - Purpose: Get top-rated wines
+
+4. GetTopRatedCoffees
+   - Input: top_count (INT)
+   - Purpose: Get top-rated coffees
+
+5. GetPairings
+   - Input: None
+   - Purpose: Get all wine-coffee pairings
+
+6. AddCustomer
+   - Input: name, email, phone, address
+   - Purpose: Add new customer
+
+7. GetCustomerOrders
+   - Input: cust_id (INT)
+   - Purpose: Get customer order history
+
+8. GetTotalSales
+   - Input: None
+   - Purpose: Get sales statistics
+
+9. AddWine
+   - Input: Wine details
+   - Purpose: Add new wine
+
+10. AddCoffee
+   - Input: Coffee details
+   - Purpose: Add new coffee
+
+11. CreateOrder
+   - Input: cust_id (INT)
+   - Purpose: Create new order
+
+12. AddWineToOrder
+   - Input: order_id, wine_id, quantity, subtotal
+   - Purpose: Add wine to order
+
+13. AddCoffeeToOrder
+   - Input: order_id, coffee_id, quantity, subtotal
+   - Purpose: Add coffee to order
+
+==========================================================
+🔧 FUNCTIONS (5 total)
+==========================================================
+
+1. CalculateOrderTotal
+   - Input: order_id (INT)
+   - Returns: DECIMAL(12,2)
+   - Purpose: Calculate order total
+
+2. GetAverageRating
+   - Input: product_id (INT), product_type (VARCHAR)
+   - Returns: DECIMAL(3,2)
+   - Purpose: Get average product rating
+
+3. GetWineTotalSales
+   - Input: wine_id (INT)
+   - Returns: DECIMAL(12,2)
+   - Purpose: Get total sales for wine
+
+4. GetCoffeeTotalSales
+   - Input: coffee_id (INT)
+   - Returns: DECIMAL(12,2)
+   - Purpose: Get total sales for coffee
+
+5. CheckInventoryStatus
+   - Input: product_id (INT)
+   - Returns: VARCHAR(20)
+   - Purpose: Check if product in stock
+
+==========================================================
